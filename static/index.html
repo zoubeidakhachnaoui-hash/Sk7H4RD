@@ -1,1 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PANEL FF - Premium VIP Services</title>
+    
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <meta property="og:title" content="PANEL FF - Premium VIP Services">
+    <meta property="og:description" content="Access the most advanced Free Fire services. VIP members get exclusive features and priority support.">
+    <meta property="og:image" content="og-image.jpg">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PANEL FF">
+    <meta name="twitter:description" content="Premium VIP Services for Free Fire">
+    <meta name="twitter:image" content="og-image.jpg">
+    
+    <meta name="description" content="Premium Free Fire VIP services. Exclusive access to advanced features and player tools.">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo-icon">FF</div>
+                <h1>PANEL FF</h1>
+            </div>
+            <p class="tagline">Premium VIP Services - Advanced Gaming Experience</p>
+            <a href="/vip/login" class="vip-btn glow">VIP ACCESS</a>
+        </header>
+        
+        <div class="stats-section" id="statsSection">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-icon-top">&#128101;</div>
+                    <div class="stat-number" id="visitorCount">0</div>
+                    <div class="stat-label">Website Visitors</div>
+                </div>
+            </div>
+        </div>
 
+        <footer>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">FF</div>
+                    <span>PANEL FF</span>
+                </div>
+                <p class="footer-credits">Developed by <strong>H4RDIXX OFFICIAL</strong> AND <strong>SK7 D5M</strong></p>
+                
+                <div class="telegram-links" style="margin-top: 20px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                    <a href="https://t.me/lliillliiilliil" target="_blank" style="display: flex; align-items: center; gap: 10px; color: #1e90ff; text-decoration: none; padding: 12px 24px; border: 1px solid rgba(30, 144, 255, 0.4); border-radius: 10px; transition: all 0.3s ease; background: rgba(30, 144, 255, 0.1);">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="width: 24px; height: 24px;">
+                        <span style="font-weight: 600;">H4RDIXX official</span>
+                    </a>
+                    <a href="https://t.me/Iiililililililililli" target="_blank" style="display: flex; align-items: center; gap: 10px; color: #1e90ff; text-decoration: none; padding: 12px 24px; border: 1px solid rgba(30, 144, 255, 0.4); border-radius: 10px; transition: all 0.3s ease; background: rgba(30, 144, 255, 0.1);">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="width: 24px; height: 24px;">
+                        <span style="font-weight: 600;">SK7 D5M</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('visitorCount').textContent = data.website_visits.toLocaleString();
+                    document.getElementById('telegramUsers').textContent = data.telegram_users.toLocaleString();
+                    document.getElementById('danceCommands').textContent = data.dance_commands.toLocaleString();
+                }
+            } catch (error) {
+                console.log('Stats not available');
+            }
+        }
+
+        window.addEventListener('load', () => {
+            loadStats();
+            setInterval(loadStats, 30000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Dashboard - PANEL FF</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000, #0a0a1a, #0d1b2a);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px 25px;
+            background: linear-gradient(145deg, rgba(13, 27, 42, 0.95), rgba(0, 0, 0, 0.9));
+            border-radius: 15px;
+            border: 1px solid rgba(30, 144, 255, 0.2);
+        }
+
+        .nav-back a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #1e90ff;
+            text-decoration: none;
+            padding: 12px 20px;
+            border: 1px solid rgba(30, 144, 255, 0.4);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-back a:hover {
+            background: rgba(30, 144, 255, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #ff4757, #c0392b);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 71, 87, 0.4);
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            background: linear-gradient(145deg, rgba(13, 27, 42, 0.95), rgba(0, 0, 0, 0.9));
+            border-radius: 20px;
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #1e90ff, #00bfff, transparent);
+        }
+
+        h1 {
+            font-size: 2.8em;
+            background: linear-gradient(135deg, #1e90ff, #00bfff, #87ceeb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #87ceeb;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .service-card {
+            background: linear-gradient(145deg, rgba(13, 27, 42, 0.95), rgba(0, 0, 0, 0.9));
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(30, 144, 255, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(30, 144, 255, 0.25);
+            border-color: rgba(30, 144, 255, 0.5);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(30, 144, 255, 0.2);
+        }
+
+        .card-icon {
+            font-size: 2.5em;
+            filter: drop-shadow(0 0 10px rgba(30, 144, 255, 0.5));
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            color: #1e90ff;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #87ceeb;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            background: rgba(13, 27, 42, 0.8);
+            color: white;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e90ff;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.3);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(135, 206, 235, 0.5);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .btn-dance {
+            background: linear-gradient(135deg, #1e90ff, #0066cc);
+            color: white;
+            box-shadow: 0 5px 20px rgba(30, 144, 255, 0.4);
+        }
+
+        .btn-dance:hover {
+            box-shadow: 0 10px 30px rgba(30, 144, 255, 0.6);
+        }
+
+        .btn-ghost {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: white;
+            box-shadow: 0 5px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-ghost:hover {
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: white;
+            box-shadow: 0 5px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-info:hover {
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.6);
+        }
+
+        .response-area {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(30, 144, 255, 0.15);
+            min-height: 80px;
+        }
+
+        .response-title {
+            color: #1e90ff;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .response-content {
+            color: #87ceeb;
+            white-space: pre-wrap;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .success {
+            color: #10b981;
+        }
+
+        .error {
+            color: #ff4757;
+        }
+
+        .loading {
+            color: #fbbf24;
+        }
+
+        .emotes-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .emotes-selector::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .emotes-selector::-webkit-scrollbar-track {
+            background: rgba(13, 27, 42, 0.5);
+            border-radius: 4px;
+        }
+
+        .emotes-selector::-webkit-scrollbar-thumb {
+            background: rgba(30, 144, 255, 0.5);
+            border-radius: 4px;
+        }
+
+        .emote-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 8px;
+            background: rgba(13, 27, 42, 0.8);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #87ceeb;
+            font-size: 0.75em;
+        }
+
+        .emote-btn:hover {
+            background: rgba(30, 144, 255, 0.15);
+            border-color: rgba(30, 144, 255, 0.5);
+        }
+
+        .emote-btn.active {
+            background: rgba(30, 144, 255, 0.2);
+            border-color: #1e90ff;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.4);
+        }
+
+        .emote-btn img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 2px 8px rgba(30, 144, 255, 0.3));
+        }
+
+        .uid-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .uid-grid input {
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            background: rgba(13, 27, 42, 0.8);
+            color: white;
+            font-size: 0.95em;
+        }
+
+        .uid-grid input:focus {
+            border-color: #1e90ff;
+            outline: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            color: rgba(135, 206, 235, 0.6);
+            font-size: 0.95em;
+            border-top: 1px solid rgba(30, 144, 255, 0.2);
+        }
+
+        .developed-by {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(30, 144, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.85em;
+            color: #87ceeb;
+        }
+
+        .telegram-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .telegram-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #1e90ff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid rgba(30, 144, 255, 0.4);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .telegram-link:hover {
+            background: rgba(30, 144, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .uid-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <div class="nav-back">
+                <a href="/">Back to Home</a>
+            </div>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+
+        <script>
+            function logout() {
+                localStorage.removeItem('vipToken');
+                localStorage.removeItem('vipUser');
+                alert('Logged out successfully');
+                window.location.href = '/';
+            }
+        </script>
+
+        <header>
+            <h1>VIP Dashboard</h1>
+            <p class="tagline">Premium tools for enhanced gaming experience</p>
+        </header>
+
+        <div class="profile-card" id="profileCard" style="background: linear-gradient(145deg, rgba(13, 27, 42, 0.95), rgba(0, 0, 0, 0.9)); border-radius: 20px; padding: 25px; border: 1px solid rgba(30, 144, 255, 0.3); margin-bottom: 30px;">
+            <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #1e90ff, #00bfff); border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 28px;">👤</div>
+                <div style="flex: 1;">
+                    <h3 style="color: #1e90ff; margin-bottom: 5px;" id="profileUsername">Loading...</h3>
+                    <p style="color: #87ceeb; font-size: 0.9em;" id="profileStatus">Checking subscription...</p>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; width: 100%; margin-top: 15px;">
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; text-align: center;">
+                        <div style="color: #64748b; font-size: 0.75em; margin-bottom: 5px;">Activated</div>
+                        <div style="color: #10b981; font-weight: 600;" id="profileActivated">--</div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; text-align: center;">
+                        <div style="color: #64748b; font-size: 0.75em; margin-bottom: 5px;">Expires</div>
+                        <div style="color: #f59e0b; font-weight: 600;" id="profileExpires">--</div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; text-align: center;">
+                        <div style="color: #64748b; font-size: 0.75em; margin-bottom: 5px;">Remaining</div>
+                        <div style="color: #1e90ff; font-weight: 600; font-size: 1.2em;" id="profileRemaining">--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="card-header">
+                    <div class="card-icon">💃</div>
+                    <div class="card-title">Real Dance System</div>
+                </div>
+                <div class="form-group">
+                    <label>Team Code</label>
+                    <input type="text" id="teamCodeDance" placeholder="Enter team code" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label>Player IDs (up to 8)</label>
+                    <div id="uidContainer">
+                        <div class="uid-entry" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <input type="text" class="uid-input" placeholder="Enter Player ID" style="flex: 1;">
+                            <button type="button" class="remove-uid-btn" onclick="removeUid(this)" style="background: #ff4757; border: none; color: white; padding: 10px 15px; border-radius: 8px; cursor: pointer; display: none;">X</button>
+                        </div>
+                    </div>
+                    <button type="button" id="addUidBtn" onclick="addUid()" style="background: linear-gradient(135deg, #10b981, #059669); border: none; color: white; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; margin-top: 10px; width: 100%;">+ Add UID</button>
+                </div>
+                <div class="form-group">
+                    <label>Select Dance Emote (Click to Execute)</label>
+                    <input type="hidden" id="danceNumber" value="909050013">
+                    <div class="emotes-selector" id="emotesSelector"></div>
+                </div>
+                <div class="response-area">
+                    <div class="response-title">Response:</div>
+                    <div class="response-content" id="danceResponse">Waiting for action...</div>
+                </div>
+                <div class="developed-by">Developed by H4RDIXX OFFICIAL AND SK7 D5M</div>
+            </div>
+
+            <div class="service-card">
+                <div class="card-header">
+                    <div class="card-icon">👻</div>
+                    <div class="card-title">Ghost Attack System</div>
+                </div>
+                <div class="form-group">
+                    <label>Ghost Name</label>
+                    <input type="text" id="ghostName" placeholder="Enter ghost name" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>Team Code</label>
+                    <input type="text" id="teamCodeGhost" placeholder="Enter team code" maxlength="10">
+                </div>
+                <button class="action-btn btn-ghost" onclick="executeGhost()">Send Ghost Attack</button>
+                <div class="response-area">
+                    <div class="response-title">Response:</div>
+                    <div class="response-content" id="ghostResponse">Waiting for action...</div>
+                </div>
+                <div class="developed-by">Developed by H4RDIXX OFFICIAL AND SK7 D5M</div>
+            </div>
+
+            <div class="service-card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">Player Information</div>
+                </div>
+                <div class="form-group">
+                    <label>Player ID</label>
+                    <input type="text" id="playerIdInfo" placeholder="Enter player ID">
+                </div>
+                <button class="action-btn btn-info" onclick="getPlayerInfo()">Get Player Info</button>
+                <div class="response-area">
+                    <div class="response-title">Response:</div>
+                    <div class="response-content" id="infoResponse">Waiting for action...</div>
+                </div>
+                <div class="developed-by">Developed by H4RDIXX OFFICIAL AND SK7 D5M</div>
+            </div>
+
+            <div class="service-card">
+                <div class="card-header">
+                    <div class="card-icon">👕</div>
+                    <div class="card-title">Player Outfit</div>
+                </div>
+                <div class="form-group">
+                    <label>Player ID</label>
+                    <input type="text" id="playerIdOutfit" placeholder="Enter player ID">
+                </div>
+                <button class="action-btn btn-info" onclick="getOutfit()">Get Outfit</button>
+                <div class="response-area">
+                    <div class="response-title">Response:</div>
+                    <div class="response-content" id="outfitResponse">Waiting for action...</div>
+                </div>
+                <div class="developed-by">Developed by H4RDIXX OFFICIAL AND SK7 D5M</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>PANEL FF | Premium Gaming Tools</p>
+            <p style="margin-top:8px;">Developed by <strong style="color:#1e90ff;">H4RDIXX OFFICIAL</strong> AND <strong style="color:#1e90ff;">SK7 D5M</strong></p>
+            
+            <div class="telegram-links">
+                <a href="https://t.me/lliillliiilliil" target="_blank" class="telegram-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="width: 22px; height: 22px;">
+                    <span>H4RDIXX official</span>
+                </a>
+                <a href="https://t.me/Iiililililililililli" target="_blank" class="telegram-link">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="width: 22px; height: 22px;">
+                    <span>SK7 D5M</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let apiToken = null;
+        const API_BASE = window.location.origin + '/api';
+
+        window.addEventListener('load', () => {
+            const vipToken = localStorage.getItem('vipToken');
+            if (!vipToken) {
+                alert('Please login to access VIP services');
+                window.location.href = '/vip/login';
+                return;
+            }
+            loadEmotesData().then(() => initAPI());
+            loadProfile();
+        });
+
+        async function loadProfile() {
+            try {
+                const vipToken = localStorage.getItem('vipToken');
+                const response = await fetch(`${API_BASE}/vip/profile`, {
+                    headers: { 'X-VIP-Token': vipToken }
+                });
+                const data = await response.json();
+                if (data.success && data.profile) {
+                    const p = data.profile;
+                    document.getElementById('profileUsername').textContent = p.username;
+                    document.getElementById('profileActivated').textContent = p.activated_at;
+                    document.getElementById('profileExpires').textContent = p.expires_at;
+                    
+                    if (p.remaining_days === 'Unlimited') {
+                        document.getElementById('profileRemaining').textContent = 'Unlimited';
+                        document.getElementById('profileStatus').textContent = 'Subscription: Unlimited';
+                        document.getElementById('profileStatus').style.color = '#10b981';
+                    } else if (p.is_expired) {
+                        document.getElementById('profileRemaining').textContent = 'Expired';
+                        document.getElementById('profileRemaining').style.color = '#ff4757';
+                        document.getElementById('profileStatus').textContent = 'Subscription: Expired';
+                        document.getElementById('profileStatus').style.color = '#ff4757';
+                    } else {
+                        document.getElementById('profileRemaining').textContent = p.remaining_days + ' days';
+                        document.getElementById('profileStatus').textContent = 'Subscription: Active';
+                        document.getElementById('profileStatus').style.color = '#10b981';
+                    }
+                }
+            } catch(e) {
+                console.log('Could not load profile');
+            }
+        }
+
+        let emotes = [];
+
+        async function loadEmotesData() {
+            try {
+                const response = await fetch('/emotes_data.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    emotes = data.map(e => ({id: e.id, n: e.name, img: e.image}));
+                }
+            } catch(e) {
+                console.log('Using fallback emotes');
+            }
+
+            if (emotes.length === 0) {
+                emotes = [
+                    {id:'909050013',n:'Blade from Heart'},{id:'909050014',n:'Map Read'},{id:'909050015',n:'Tomato Smash'},
+                    {id:'909050016',n:'Tactical Moveout'},{id:'909050017',n:'Bunny Wiggle'},{id:'909050018',n:'Flaming Heart'},
+                    {id:'909050019',n:'Rain or Shine'},{id:'909050020',n:'Sholay'},{id:'909050021',n:'Peak Points'},
+                    {id:'909051001',n:'Prismatic Flight'},{id:'909051002',n:'Gather Around'},{id:'909051003',n:'Rain of Spikes'},
+                    {id:'909051004',n:'Shower Time'},{id:'909051005',n:'Boss Energy'},{id:'909051006',n:'Double Holster'},
+                    {id:'909051007',n:'Finger Guns'},{id:'909051008',n:'Shivering'},{id:'909051009',n:'Triple Shush'},
+                    {id:'909051010',n:'On Motorbike'},{id:'909051011',n:'Twisted Stare'},{id:'909051012',n:'Celestial Shot'},
+                    {id:'909051013',n:'Red Petals'},{id:'909051014',n:'Puffer Ride'},{id:'909051015',n:"Can't Stop Laughing"},
+                    {id:'909051016',n:'Crowned Glory'},{id:'909051017',n:'Choppy Co-op'},{id:'909051018',n:'Group Celebration'},
+                    {id:'909051019',n:'Unity Dance'},{id:'909051020',n:'Team Spirit'}
+                ];
+            }
+        }
+
+        async function initAPI() {
+            try {
+                const r = await fetch(`${API_BASE}/token`);
+                const d = await r.json();
+                apiToken = d.token;
+                loadEmotes();
+            } catch(e) {
+                console.error('API Error:', e);
+                showResponse('danceResponse', 'API connection error', 'error');
+            }
+        }
+
+        function loadEmotes() {
+            const sel = document.getElementById('emotesSelector');
+            sel.innerHTML = '';
+            emotes.forEach((e, idx) => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'emote-btn';
+                const imageUrl = e.img ? e.img : `https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/${e.id}.png`;
+                b.innerHTML = `<img src="${imageUrl}" alt="${e.n}" loading="lazy"><span>${e.n}</span>`;
+                b.onclick = (ev) => { ev.preventDefault(); selectAndExecuteDance(e.id, b); };
+                sel.appendChild(b);
+            });
+        }
+
+        function selectAndExecuteDance(id, btn) {
+            document.querySelectorAll('.emote-btn').forEach(b => b.classList.remove('active'));
+            if (btn) {
+                btn.classList.add('active');
+                btn.style.opacity = '0.6';
+                btn.style.pointerEvents = 'none';
+            }
+            document.getElementById('danceNumber').value = id;
+            showResponse('danceResponse', '⏳ Processing...', 'loading');
+            executeDance().then(() => {
+                if (btn) {
+                    btn.style.opacity = '1';
+                    btn.style.pointerEvents = 'auto';
+                }
+            });
+        }
+
+        function addUid() {
+            const container = document.getElementById('uidContainer');
+            const entries = container.querySelectorAll('.uid-entry');
+            if (entries.length >= 8) {
+                showResponse('danceResponse', 'Maximum 8 UIDs allowed!', 'error');
+                return;
+            }
+            const newEntry = document.createElement('div');
+            newEntry.className = 'uid-entry';
+            newEntry.style = 'display: flex; gap: 10px; margin-bottom: 10px;';
+            newEntry.innerHTML = `
+                <input type="text" class="uid-input" placeholder="Enter Player ID" style="flex: 1;">
+                <button type="button" class="remove-uid-btn" onclick="removeUid(this)" style="background: #ff4757; border: none; color: white; padding: 10px 15px; border-radius: 8px; cursor: pointer;">X</button>
+            `;
+            container.appendChild(newEntry);
+            updateRemoveButtons();
+        }
+
+        function removeUid(btn) {
+            const entry = btn.parentElement;
+            entry.remove();
+            updateRemoveButtons();
+        }
+
+        function updateRemoveButtons() {
+            const entries = document.querySelectorAll('.uid-entry');
+            entries.forEach((entry, idx) => {
+                const removeBtn = entry.querySelector('.remove-uid-btn');
+                if (removeBtn) {
+                    removeBtn.style.display = entries.length > 1 ? 'block' : 'none';
+                }
+            });
+        }
+
+        function showResponse(id, msg, type) {
+            const el = document.getElementById(id);
+            el.textContent = msg;
+            el.className = 'response-content ' + type;
+        }
+
+        async function executeDance() {
+            const tc = document.getElementById('teamCodeDance').value;
+            const dn = document.getElementById('danceNumber').value;
+            const uids = [];
+            const uidInputs = document.querySelectorAll('.uid-input');
+            uidInputs.forEach(input => {
+                const uid = input.value.trim();
+                if (uid) uids.push(uid);
+            });
+
+            if (!tc) { showResponse('danceResponse', 'Enter team code!', 'error'); return; }
+            if (uids.length === 0) { showResponse('danceResponse', 'Enter at least one Player ID!', 'error'); return; }
+            if (!apiToken) { showResponse('danceResponse', 'API not ready!', 'error'); return; }
+
+            showResponse('danceResponse', 'Executing dance for ' + uids.length + ' players...', 'loading');
+            try {
+                let url = `${API_BASE}/dance?dance_number=${dn}&team_code=${tc}`;
+                uids.forEach((uid, idx) => { url += `&uid${idx+1}=${uid}`; });
+
+                const r = await fetch(url, {
+                    method: 'GET',
+                    headers: { 'X-API-Token': apiToken }
+                });
+                const d = await r.json();
+                if (r.ok && d.status === 'success') {
+                    const apiMsg = d.api_response ? d.api_response.message : d.message;
+                    const info = `Dance Executed!
+Team Code: ${d.team_code}
+Emote ID: ${d.dance_number}
+Players: ${uids.length}
+API: ${apiMsg || 'Success'}`;
+                    showResponse('danceResponse', info, 'success');
+                } else {
+                    showResponse('danceResponse', `${d.error || 'Failed'}`, 'error');
+                }
+            } catch(e) {
+                showResponse('danceResponse', `Error: ${e.message}`, 'error');
+            }
+        }
+
+        async function getOutfit() {
+            const pid = document.getElementById('playerIdOutfit').value;
+
+            if (!pid) { showResponse('outfitResponse', 'Enter Player ID!', 'error'); return; }
+            if (!apiToken) { showResponse('outfitResponse', 'API not ready!', 'error'); return; }
+
+            const respEl = document.getElementById('outfitResponse');
+            respEl.textContent = 'Loading outfit image...';
+            respEl.className = 'response-content loading';
+
+            try {
+                const imgUrl = `${API_BASE}/outfit?player_id=${pid}`;
+                const r = await fetch(imgUrl, {
+                    method: 'GET',
+                    headers: { 'X-API-Token': apiToken }
+                });
+
+                if (r.ok) {
+                    const blob = await r.blob();
+                    const objUrl = URL.createObjectURL(blob);
+                    const html = `<img src="${objUrl}" style="width:100%;max-width:400px;border-radius:12px;margin-top:10px;" alt="Player Outfit">
+                    <p style="margin-top:10px;color:#10b981;">Outfit loaded for Player ${pid}</p>
+                    <p style="margin-top:5px;color:#87ceeb;font-size:0.85em;">Developed by H4RDIXX OFFICIAL AND SK7 D5M</p>`;
+                    respEl.innerHTML = html;
+                    respEl.className = 'response-content success';
+                } else {
+                    const errData = await r.json().catch(() => ({}));
+                    showResponse('outfitResponse', `${errData.error || 'Failed to load outfit'}`, 'error');
+                }
+            } catch(e) {
+                showResponse('outfitResponse', `Error: ${e.message}`, 'error');
+            }
+        }
+
+        async function executeGhost() {
+            const gn = document.getElementById('ghostName').value;
+            const tc = document.getElementById('teamCodeGhost').value;
+
+            if (!gn || !tc) { showResponse('ghostResponse', 'Fill all fields!', 'error'); return; }
+            if (!apiToken) { showResponse('ghostResponse', 'API not ready!', 'error'); return; }
+
+            showResponse('ghostResponse', 'Sending...', 'loading');
+            try {
+                const r = await fetch(`${API_BASE}/ghost?ghost_name=${encodeURIComponent(gn)}&team_code=${tc}`, {
+                    method: 'GET',
+                    headers: { 'X-API-Token': apiToken }
+                });
+                const d = await r.json();
+                if (r.ok && d.status === 'success') {
+                    let resultInfo = '';
+                    if (d.api_response && d.api_response.results) {
+                        const results = Object.values(d.api_response.results);
+                        resultInfo = `\nBots: ${results.length}`;
+                    }
+                    const info = `Ghost Sent!
+Name: ${d.ghost_name}
+Team: ${d.team_code}${resultInfo}
+Time: ${new Date().toLocaleTimeString()}`;
+                    showResponse('ghostResponse', info, 'success');
+                } else {
+                    showResponse('ghostResponse', `${d.error || 'Failed'}`, 'error');
+                }
+            } catch(e) {
+                showResponse('ghostResponse', `Error: ${e.message}`, 'error');
+            }
+        }
+
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return 'Unknown';
+            const date = new Date(parseInt(timestamp) * 1000);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', month: 'short', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        }
+
+        function getRankName(rank) {
+            const ranks = {
+                1: 'Bronze I', 2: 'Bronze II', 3: 'Bronze III',
+                4: 'Silver I', 5: 'Silver II', 6: 'Silver III',
+                7: 'Gold I', 8: 'Gold II', 9: 'Gold III', 10: 'Gold IV',
+                11: 'Platinum I', 12: 'Platinum II', 13: 'Platinum III', 14: 'Platinum IV',
+                15: 'Diamond I', 16: 'Diamond II', 17: 'Diamond III', 18: 'Diamond IV',
+                19: 'Heroic', 20: 'Heroic', 21: 'Grandmaster'
+            };
+            if (rank >= 301) return 'Grandmaster';
+            if (rank >= 21) return 'Grandmaster';
+            return ranks[rank] || 'Unknown';
+        }
+
+        async function getPlayerInfo() {
+            const pid = document.getElementById('playerIdInfo').value;
+
+            if (!pid) { showResponse('infoResponse', 'Enter Player ID!', 'error'); return; }
+
+            const respEl = document.getElementById('infoResponse');
+            respEl.innerHTML = '<span class="loading">Loading player data...</span>';
+
+            try {
+                const r = await fetch(`/info=${pid}`);
+                const data = await r.json();
+                
+                if (data.error) {
+                    showResponse('infoResponse', data.message || data.error, 'error');
+                    return;
+                }
+                
+                const basicInfo = data.basicInfo || {};
+                const clanInfo = data.clanBasicInfo || {};
+                const socialInfo = data.socialInfo || {};
+                
+                const avatarId = data.profileInfo?.avatarId || basicInfo.avatarId || 0;
+                const nickname = basicInfo.nickname || 'Unknown';
+                const level = basicInfo.level || 0;
+                const exp = basicInfo.exp || 0;
+                const region = basicInfo.region || 'Unknown';
+                const rank = basicInfo.rank || 0;
+                const rankPoints = basicInfo.rankingPoints || 0;
+                const likes = basicInfo.liked || 0;
+                const lastLogin = basicInfo.lastLoginAt || '';
+                const csRank = basicInfo.csRank || 0;
+                const badges = basicInfo.badgeCnt || 0;
+                const elitePass = basicInfo.hasElitePass ? 'Yes' : 'No';
+                const createAt = basicInfo.createAt || '';
+                const signature = socialInfo.signature || '';
+                
+                respEl.innerHTML = `
+                    <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:20px;border:1px solid rgba(30,144,255,0.3);">
+                        <div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid rgba(30,144,255,0.2);flex-wrap:wrap;">
+                            <img src="https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/${avatarId}.png" 
+                                 style="width:60px;height:60px;border-radius:10px;background:rgba(30,144,255,0.1);" 
+                                 onerror="this.src='https://via.placeholder.com/60'" alt="Avatar">
+                            <div style="flex:1;min-width:120px;">
+                                <div style="font-size:1.3em;font-weight:700;color:#fff;">${nickname}</div>
+                                <div style="color:#8b949e;font-size:0.9em;">UID: ${pid}</div>
+                                <span style="background:linear-gradient(135deg,#1f6feb,#58a6ff);padding:3px 10px;border-radius:15px;font-size:0.75em;font-weight:600;">${region}</span>
+                            </div>
+                            <div style="background:linear-gradient(135deg,#f0883e,#db6d28);padding:10px 16px;border-radius:8px;font-weight:700;">LV ${level}</div>
+                        </div>
+                        
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:15px;">
+                            <div style="background:rgba(30,144,255,0.1);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-weight:700;color:#58a6ff;">${getRankName(rank)}</div>
+                                <div style="font-size:0.75em;color:#8b949e;">BR Rank</div>
+                            </div>
+                            <div style="background:rgba(30,144,255,0.1);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-weight:700;color:#58a6ff;">${rankPoints.toLocaleString()}</div>
+                                <div style="font-size:0.75em;color:#8b949e;">BR Points</div>
+                            </div>
+                            <div style="background:rgba(30,144,255,0.1);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-weight:700;color:#58a6ff;">${getRankName(csRank)}</div>
+                                <div style="font-size:0.75em;color:#8b949e;">CS Rank</div>
+                            </div>
+                            <div style="background:rgba(30,144,255,0.1);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-weight:700;color:#ff6b9d;">${likes.toLocaleString()}</div>
+                                <div style="font-size:0.75em;color:#8b949e;">Likes</div>
+                            </div>
+                            <div style="background:rgba(30,144,255,0.1);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-weight:700;color:#fbbf24;">${badges}</div>
+                                <div style="font-size:0.75em;color:#8b949e;">Badges</div>
+                            </div>
+                            <div style="background:rgba(30,144,255,0.1);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-weight:700;color:#10b981;">${exp.toLocaleString()}</div>
+                                <div style="font-size:0.75em;color:#8b949e;">EXP</div>
+                            </div>
+                        </div>
+                        
+                        ${clanInfo.clanName ? `
+                        <div style="background:rgba(139,92,246,0.1);padding:12px;border-radius:8px;margin-bottom:12px;border:1px solid rgba(139,92,246,0.2);">
+                            <div style="font-size:0.85em;color:#a78bfa;margin-bottom:5px;">Clan</div>
+                            <div style="font-weight:600;color:#fff;">${clanInfo.clanName}</div>
+                            <div style="font-size:0.8em;color:#8b949e;">Level: ${clanInfo.clanLevel || 0} | Members: ${clanInfo.memberNum || 0}/${clanInfo.capacity || 0}</div>
+                        </div>` : ''}
+                        
+                        ${signature ? `
+                        <div style="background:rgba(30,144,255,0.05);padding:12px;border-radius:8px;margin-bottom:12px;border-left:3px solid #58a6ff;">
+                            <div style="font-size:0.85em;color:#58a6ff;margin-bottom:5px;">Bio</div>
+                            <div style="color:#c9d1d9;font-size:0.9em;">${signature}</div>
+                        </div>` : ''}
+                        
+                        <div style="display:grid;gap:8px;font-size:0.85em;">
+                            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(48,54,61,0.5);">
+                                <span style="color:#8b949e;">Elite Pass:</span>
+                                <span style="color:${elitePass === 'Yes' ? '#10b981' : '#8b949e'};font-weight:500;">${elitePass}</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(48,54,61,0.5);">
+                                <span style="color:#8b949e;">Last Login:</span>
+                                <span style="color:#c9d1d9;">${formatTimestamp(lastLogin)}</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;padding:8px 0;">
+                                <span style="color:#8b949e;">Created:</span>
+                                <span style="color:#c9d1d9;">${formatTimestamp(createAt)}</span>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align:center;margin-top:15px;padding-top:12px;border-top:1px solid rgba(48,54,61,0.5);color:#6e7681;font-size:0.8em;">
+                            Developed by H4RDIXX OFFICIAL AND SK7 D5M
+                        </div>
+                    </div>
+                `;
+            } catch(e) {
+                showResponse('infoResponse', `Error: ${e.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
